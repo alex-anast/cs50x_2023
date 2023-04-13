@@ -32,12 +32,11 @@ int calculate_years(int start, int end)
 
     int years = 0;
 
-    do
+    while (population < end)
     {
         population += (population / 3) - (population / 4);
         years++;
     }
-    while (population < end);
 
     return years;
 }
