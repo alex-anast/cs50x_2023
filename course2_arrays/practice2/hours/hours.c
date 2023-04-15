@@ -1,3 +1,7 @@
+/**
+ * @brief for practice with arrays, passing arrays as parameters to a function, integer division and type casting
+ */
+
 #include <cs50.h>
 #include <ctype.h>
 #include <stdio.h>
