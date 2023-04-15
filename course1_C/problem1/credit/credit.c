@@ -16,9 +16,9 @@ enum Company
     VISA
 };
 
-int is_amex(char* card_number, int length);
-int is_mastercard(char* card_number, int length);
-int is_visa(char* card_number, int length);
+int is_amex(char *card_number, int length);
+int is_mastercard(char *card_number, int length);
+int is_visa(char *card_number, int length);
 int luhn_algorithm(long card_number);
 enum Company find_company(long card_number);
 enum Company card_info(long card_number);
@@ -29,7 +29,8 @@ int main(void)
 
     enum Company company = card_info(card_number);
 
-    switch (company) {
+    switch (company)
+    {
         case AMEX:
             printf("AMEX\n");
             break;
@@ -91,7 +92,7 @@ int luhn_algorithm(long card_number)
     }
 }
 
-int is_amex(char* card_number, int length)
+int is_amex(char *card_number, int length)
 {
     if (strncmp(card_number, "34", 2) == 0 || strncmp(card_number, "37", 2) == 0)
     {
@@ -103,7 +104,7 @@ int is_amex(char* card_number, int length)
     return 0;
 }
 
-int is_mastercard(char* card_number, int length)
+int is_mastercard(char *card_number, int length)
 {
     char prefix_str[3];
     /* copy the first two characters */
@@ -123,7 +124,7 @@ int is_mastercard(char* card_number, int length)
     return 0;
 }
 
-int is_visa(char* card_number, int length)
+int is_visa(char *card_number, int length)
 {
     if (card_number[0] == '4')
     {
