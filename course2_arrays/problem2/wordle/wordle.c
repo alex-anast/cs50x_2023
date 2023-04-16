@@ -1,3 +1,14 @@
+/**
+ * @file wordle.c
+ * @author Alexandros Anastasiou (AnastasioyAA@gmail.com)
+ * @brief Wordle50 game from CS50x Harvard 2023. I want to experiment with test-oriented software
+ * @version 0.1
+ * @date 2023-04-16
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include <cs50.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -28,46 +39,29 @@ void print_word(string guess, int wordsize, int status[]);
 int main(int argc, string argv[])
 {
     /* ensure proper usage - check if at least one argument and if it is a number too */
-    if (argc < 2)
-    {
-        printf("Usage: ./wordle wordsize\n");
-        return 1;
-    }
+    assert(argc == 2 && "Usage: ./wordle wordsize");
 
     /* check if the input string contains only a single digit */
-    if (!isdigit(argv[1][0]))
-    {
-        printf("Input is not an integer!\n");
-        return 1;
-    }
+    assert(isdigit(argv[1][0]) && "Input is not an integer!");
 
     /* convert input to integer */
     int wordsize = atoi(argv[1]);
 
     /* ensure argv[1] is either 5, 6, 7, or 8 and store that value in wordsize instead */
-    if (wordsize < 5 || wordsize > 8)
-    {
-        printf("Error: wordsize must be either 5, 6, 7, or 8\n");
-        return 1;
-    }
+    assert((wordsize >= 5 && wordsize <= 8) && "Error: wordsize must be either 5, 6, 7, or 8\n");
 
     /* open correct file, each file has exactly LISTSIZE words */
     char wl_filename[6];
     sprintf(wl_filename, "%i.txt", wordsize);
     FILE *wordlist = fopen(wl_filename, "r");
-    if (wordlist == NULL)
-    {
-        printf("Error opening file %s.\n", wl_filename);
-        return 1;
-    }
-    // assert(wordlist != NULL && "Error opening file");
+    assert(wordlist != NULL && "Error opening file");
 
     /* load word file into an array of size LISTSIZE */
     char options[LISTSIZE][wordsize + 1];
 
     for (int i = 0; i < LISTSIZE; i++)
     {
-        fscanf(wordlist, "%s", options[i]);
+        assert(fscanf(wordlist, "%s", options[i]) == 1 && "Error reading file");
     }
 
     /* pseudorandomly select a word for this game */
@@ -149,6 +143,10 @@ string get_guess(int wordsize)
  */
 int check_word(string guess, int wordsize, int status[], string choice)
 {
+    assert(guess != NULL && "Guess string cannot be NULL.");
+    assert(status != NULL && "Status array cannot be NULL.");
+    assert(choice != NULL && "Choice string cannot be NULL.");
+
     int score = 0;
 
     /* iterate over each letter of the guess */
@@ -176,6 +174,8 @@ int check_word(string guess, int wordsize, int status[], string choice)
                 }
             }
         }
+        assert(status[i] == EXACT || status[i] == CLOSE || status[i] == WRONG && "Invalid status value.");
+
         /* keep track of the total score by adding each individual letter's score from above */
         score += status[i];
     }
@@ -196,6 +196,7 @@ void print_word(string guess, int wordsize, int status[])
     /* for the coloring of every character respectively */
     for (int i = 0; i < wordsize; i++)
     {
+        assert(status[i] == EXACT || status[i] == CLOSE || status[i] == WRONG && "Invalid status");
         switch (status[i])
         {
         case EXACT:
