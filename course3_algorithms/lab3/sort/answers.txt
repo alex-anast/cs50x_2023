@@ -1,0 +1,11 @@
+sort1 uses: bubble sort 
+
+How do you know?: It is the slowest for average-case and worst-case scenarios, which stands true even if it has the same time complexity in these cases as selection sort. 
+
+sort2 uses: merge sort 
+
+How do you know?: It has the best average time complexity out of the three sorting algorithms and was by far the fastest in sorting the random 50000 elements text.
+
+sort3 uses: selection sort
+
+How do you know?: For the best case scenario, Selection Sort should be the slowest because it is Ω(n²) compared to Bubblesort that is Ω(n).
