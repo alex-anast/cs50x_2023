@@ -18,6 +18,7 @@
 #include <cs50.h>
 #include <stdio.h>
 
+/* better than hard coding */
 #define NUM_CITIES 10
 
 typedef struct
@@ -26,8 +27,10 @@ typedef struct
     int temp;
 } avg_temp;
 
+/* global, bad design but the exercise doesn´t care */
 avg_temp temps[NUM_CITIES];
 
+/* in order to make the selection of the sorting algorithm more user-friendly */
 enum Select
 {
     BUBBLESORT,
@@ -90,23 +93,25 @@ int main(void)
  */
 void sort_cities(int selection)
 {
+    /* I wanted to make it more dynamic, so I used the enum */
     switch (selection)
     {
-    case BUBBLESORT:
-        bubblesort();
-        break;
+        case BUBBLESORT:
+            bubblesort();
+            break;
 
-    case SELECTIONSORT:
-        selectionsort();
-        break;
+        case SELECTIONSORT:
+            selectionsort();
+            break;
     
-    case INSERTIONSORT:
-        insertionsort();
-        break;
+        case INSERTIONSORT:
+            insertionsort();
+            break;
 
-    default:
-        printf("something has gone wrong\n");
-        break;
+        /* should never arrive here */
+        default:
+            printf("something has gone wrong\n");
+            break;
     }
 }
 
@@ -115,6 +120,7 @@ void sort_cities(int selection)
  */
 void bubblesort()
 {
+    /* traverse every element */
     for (int i = 0; i < NUM_CITIES - 1; i++)
     {
         bool swapped = 0;
@@ -143,12 +149,14 @@ void bubblesort()
  */
 void selectionsort()
 {
+    /* traverse every element */
     for (int i = 0; i < NUM_CITIES - 1; i++)
     {
         /* get the minimum and make sure it's in the lower position*/
         int min_idx = i;
         for (int j = i + 1; j < NUM_CITIES; j++)
         {
+            /* if there is a new minimum, take note */
             if (temps[j].temp < temps[min_idx].temp)
             {
                 min_idx = j;
@@ -166,8 +174,10 @@ void selectionsort()
  */
 void insertionsort()
 {
+    /* traverse every element */
     for (int i = 1; i < NUM_CITIES; i++)
     {
+        /* needs a second sorting element */
         avg_temp key = temps[i];
         int j = i - 1;
         /* insert the item in the correct position in the sorted path */

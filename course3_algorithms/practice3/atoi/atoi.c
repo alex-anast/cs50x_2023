@@ -35,7 +35,7 @@ int convert(string input)
     int integer_value;
 
     /* convert last char into an integer value */
-    integer_value = (int)(input[strlen(input)-1]) - 48;
+    integer_value = (int)(input[strlen(input) - 1]) - 48;
 
     /* base caseL if no need to go into the recersion (if string is only one char) */
     if (strlen(input) == 1)
