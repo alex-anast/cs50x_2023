@@ -1,6 +1,6 @@
 # Smiley
 
-
+A program that teaches the pixel coloring manipulation
 
 ## Learning Goals
 
@@ -37,10 +37,12 @@ The image’s height, width and a two-dimensional array of pixels is set up as t
 ## Usage
 
 ```lang-bash
-$ ./colorize smiley.bmp outfile.bmp
+$ ./colorize smiley.bmp smiley_colored.bmp
 ```
 
-outfile.bmp is the name of the new bmp you are creating.
+smiley_colorized.bmp is the name of the new bmp you are creating.
+
+The smiley face created matches my personal VSCode dark-themed background while the actual smile becomes coral.
 
 ## Question 1
 
@@ -54,3 +56,4 @@ Is this the same or different when mixing paints to repesent various colors?
 
 the process of representing colors is different from the digital representation in a BMP file. In paint mixing, colors are typically represented using subtractive color mixing, where pigments or dyes are mixed together to absorb specific wavelengths of light and reflect others.
 in additive color mixing, such as with digital displays, colors are created by adding together different colors of light (typically red, green, and blue) to produce a range of colors. The absence of any light produces black, while the presence of all colors of light produces white. This could be considered the same as with pixels.
+
