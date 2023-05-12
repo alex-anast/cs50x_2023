@@ -1,13 +1,13 @@
-/**
+/**************************************************************
  * @file speller.c
- * @author your name (you@domain.com)
+ * @author Alexandros Anastasiou (AnastasioyAA@gmail.com)
  * @brief Implements a spell-checker
  * @version 0.1
  * @date 2023-05-12
  * 
  * @copyright Copyright (c) 2023
  * 
- */
+ *************************************************************/
 
 #include <ctype.h>
 #include <stdio.h>
