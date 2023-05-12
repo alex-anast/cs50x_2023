@@ -1,18 +1,20 @@
-/**
+/*******************************************************************
  * @file inheritance.c
- * @author Alexandros Anasrasiou (AnastasioyAA@gmail.com)
- * @brief simulate genetic inheritance of blood type
+ * @author Alexandros Anastasiou (AnastasioyAA@gmail.com)
+ * @brief Simulate genetic inheritance of blood type
  * @version 0.1
  * @date 2023-05-12
  * 
  * @copyright Copyright (c) 2023
  * 
- */
+ ********************************************************************/
 
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
+#define PARENTS_NO 2
 
 /* each person has two parents and two alleles */
 typedef struct person
@@ -22,15 +24,14 @@ typedef struct person
 }
 person;
 
-/* global parameters */
-const int GENERATIONS   = 3;
+const int GENERATIONS = 3;
 const int INDENT_LENGTH = 4;
 
-/* function definitions */
 person *create_family(int generations);
 void print_family(person *p, int generation);
 void free_family(person *p);
 char random_allele();
+char random_allele_from_parents(person *parent);
 
 int main(void)
 {
@@ -39,6 +40,11 @@ int main(void)
 
     /* create a new family with three generations */
     person *p = create_family(GENERATIONS);
+    if (p == NULL)
+    {
+        fprintf(stderr, "Error in creating a family, exiting.\n");
+        return 1;
+    }
 
     /* print family tree of blood types */
     print_family(p, 0);
@@ -55,11 +61,11 @@ int main(void)
  */
 person *create_family(int generations)
 {
-    /* TODO: Allocate memory for new person */
-    person *p = malloc(sizeof(person));
-    if (p == NULL)
+    /* allocate memory for new person */
+    person *new_person = (person *)malloc(sizeof(person));
+    if (new_person == NULL)
     {
-        fprintf(stderr, "Failed to allocate memory.\n");
+        fprintf(stderr, "Allocation error.\n");
         return NULL;
     }
 
@@ -71,54 +77,57 @@ person *create_family(int generations)
         person *parent1 = create_family(generations - 1);
 
         /* set parent pointers for current person */
-        p->parents[0] = parent0;
-        p->parents[1] = parent1;
+        new_person->parents[0] = parent0;
+        new_person->parents[1] = parent1;
 
         /* randomly assign current person's alleles based on the alleles of their parents */
-        // TODO
+        new_person->alleles[0] = random_allele_from_parents(parent0);
+        new_person->alleles[1] = random_allele_from_parents(parent1);
     }
 
     /* if there are no generations left to create */
     else
     {
         /* set parent pointers to NULL */
-        p->parents[0] = NULL;
-        p->parents[1] = NULL;
+        new_person->parents[0] = NULL;
+        new_person->parents[1] = NULL;
 
-        /* TODO: randomly assign alleles */
-        p->alleles[0] = random_allele();
-        p->alleles[1] = random_allele();
-
+        /* randomly assign alleles of the root */
+        new_person->alleles[0] = random_allele();
+        new_person->alleles[1] = random_allele();
     }
 
     /* return newly created person */
-    return p;
+    return new_person;
 }
 
 /**
- * @brief Free `p` and all ancestors of `p`.
+ * @brief free `p` and all ancestors of `p`
+ *        assuming that it will always have two parents
  * 
  * @param p 
  */
 void free_family(person *p)
 {
     /* handle base case */
-    if (p == NULL)
+    if (p) // root
     {
-        fprintf(stderr, "Error, NULL pointer.\n")l
-        return;
+        /* free parents recursively */
+        if (p->parents[0] != NULL)
+        {
+            free_family(p->parents[0]);
+        }
+        if (p->parents[1] != NULL)
+        {
+            free_family(p->parents[1]);
+        }
+        /* free child */
+        free(p);
     }
-
-    /* free parents recursively */
-    free_family(p->parents[0]);
-    free_family(p->parents[1]);
-
-    /* free child */
-    free(p);
 }
 
 /**
- * @brief print each family member and their alleles.
+ * @brief Print each family member and their alleles.
  * 
  * @param p 
  * @param generation 
@@ -128,17 +137,16 @@ void print_family(person *p, int generation)
     /* handle base case */
     if (p == NULL)
     {
-        fprintf(stderr, "Error, NULL pointer.\n")l
         return;
     }
 
-    /* Print indentation
+    /* print indentation */
     for (int i = 0; i < generation * INDENT_LENGTH; i++)
     {
         printf(" ");
     }
 
-    /* Print person
+    /* print person */
     if (generation == 0)
     {
         printf("Child (Generation %i): blood type %c%c\n", generation, p->alleles[0], p->alleles[1]);
@@ -156,14 +164,13 @@ void print_family(person *p, int generation)
         printf("Grandparent (Generation %i): blood type %c%c\n", generation, p->alleles[0], p->alleles[1]);
     }
 
-    /* Print parents of current generation
+    /* print parents of current generation */
     print_family(p->parents[0], generation + 1);
     print_family(p->parents[1], generation + 1);
 }
 
-
 /**
- * @brief randomly chooses a blood type allele 
+ * @brief randomly chooses a blood type allele
  * 
  * @return char 
  */
@@ -181,5 +188,25 @@ char random_allele()
     else
     {
         return 'O';
+    }
+}
+
+/**
+ * @brief from the two characters that the parent has, randomly pick one
+ * 
+ * @param parent 
+ * @return char 
+ */
+char random_allele_from_parents(person *parent)
+{
+    /* rand() returns int between 0 and RAND_MAX == at least 32767 (varies, stdlib.h) */
+    int r = rand() % 2;
+    if (r == 0)
+    {
+        return parent->alleles[0];
+    }
+    else
+    {
+        return parent->alleles[1];
     }
 }

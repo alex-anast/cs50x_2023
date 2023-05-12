@@ -1,16 +1,11 @@
-CC = clang
-CFLAGS = -ferror-limit=1 -gdwarf-4 -ggdb3 -O0 -std=c11 -Wall -Werror -Wextra -Wno-gnu-folding-constant -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-but-set-variable -Wshadow
-LDLIBS = -lcrypt -lcs50 -lm
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra -ggdb3 -O0
 
-all : ingeritance
+inheritance: inheritance.o
+	$(CC) $(CFLAGS) -o inheritance inheritance.o
 
-ingeritance : ingeritance.o
-	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
-	rm -f ingeritance.o *~
+inheritance.o: inheritance.c
+	$(CC) $(CFLAGS) -c inheritance.c
 
-ingeritance.o: ingeritance.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-.PHONY : clean
-clean :
-	rm -f ingeritance.o *~
+clean:
+	rm -f inheritance inheritance.o
