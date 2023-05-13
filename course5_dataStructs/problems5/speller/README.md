@@ -163,6 +163,39 @@ Implementation in order:
 
 ## Implementation Details and Choice
 
+For insert and delete, the node enters the singly-linked list from the start. Therefore, we can say that the ssl is in fact a stack implementation, or a FIFO data structure. This makes the processes of insertion and deletion have O(1) time complexity.
 
+For the hash function, there are many ways to optimize. The greatest issue in the code is the *collision resolution*. 
 
+Collision resolution:
+    
+### Chaining:
 
+In chaining, a linked list is maintained at each bucket of the hash table. When a collision occurs, the new element is simply appended to the linked list at that bucket. This approach is simple to implement and provides good performance when the hash table is appropriately sized and the load factor is low. However, as the load factor increases, the performance can degrade as the number of collisions increases and the length of the linked lists grows.
+
+### Open Addressing:
+
+In open addressing, when a collision occurs, the algorithm attempts to find another empty slot in the hash table to store the new element. There are different ways to find the next empty slot, such as linear probing, quadratic probing, and double hashing. The advantage of open addressing is that it avoids the memory overhead of maintaining linked lists, which can be significant for small elements. However, it requires careful tuning of the hash function and the probing sequence to ensure good performance.
+
+### probing:
+
+Probing is a general term for the process of searching for an empty slot in the hash table when a collision occurs. It is used in both open addressing and some variants of chaining. The idea is to search for an empty slot by looking at a sequence of buckets, starting from the one originally intended for the element. Different probing sequences can be used, such as linear probing (checking the next bucket), quadratic probing (checking buckets at increasing distances), or double hashing (using a second hash function to determine the distance between probes). The goal is to find an empty slot as quickly as possible while avoiding clustering, where groups of elements form "clusters" and make it harder to find empty slots.
+
+### Cosine Similarity Method
+
+The cosine similarity hashing method is based on computing the cosine similarity between a given vector (in this case, a vector representing a document or a word) and a set of randomly generated vectors (hash functions).
+
+Here's a brief overview of the steps involved in cosine similarity hashing:
+
+- Initialize a set of k random vectors, each of length n (where n is the dimensionality of the vectors being hashed).
+- For each vector to be hashed, compute its dot product with each of the k random vectors. This yields k scalar values, each of which represents the cosine similarity between the input vector and a corresponding random vector.
+- For each of the k scalar values obtained in step 2, set the corresponding bit in a binary hash code to 1 if the scalar value is greater than or equal to 0, and to 0 otherwise.
+- The resulting binary hash code represents a compact signature of the input vector, which can be used for approximate nearest neighbor search.
+
+Cosine similarity hashing has some advantages over traditional hash functions like those used in open addressing and chaining. In particular, it is relatively easy to implement and can yield high-quality hashes with low collision rates. However, it is generally less efficient than traditional hash functions in terms of both time and space complexity.
+
+---
+
+For the dictionary, it is common to use open addressing method.
+
+---

@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 
     /* Load dictionary */
     getrusage(RUSAGE_SELF, &before);
-    bool loaded = load(dictionary); // TODO
+    bool loaded = load(dictionary);
     getrusage(RUSAGE_SELF, &after);
 
     /* Exit if dictionary not loaded */
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     {
         printf("Could not open %s.\n", text);
         /* free the dictionary */
-        unload(); // TODO
+        unload();
         return 1;
     }
 
@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 
             /* Check word's spelling */
             getrusage(RUSAGE_SELF, &before);
-            bool misspelled = !check(word); // TODO
+            bool misspelled = !check(word);
             getrusage(RUSAGE_SELF, &after);
 
             /* Update benchmark */
@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
 
     /* Determine dictionary's size */
     getrusage(RUSAGE_SELF, &before);
-    unsigned int n = size(); // TODO
+    unsigned int n = size();
     getrusage(RUSAGE_SELF, &after);
 
     /* Calculate time to determine dictionary's size */
