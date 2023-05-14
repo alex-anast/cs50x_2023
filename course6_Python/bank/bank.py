@@ -9,6 +9,12 @@ def user_input():
 
 
 def greet(user_input):
+    # remove the white spaces in the front of the string
+    while True: # do - while implementation from C 
+        if user_input[0] == ' ':
+            user_input = user_input[1:]
+        else:
+            break
     # if the greeting starts with hello
     if user_input[:5].lower() == "hello":
         return "$0"
