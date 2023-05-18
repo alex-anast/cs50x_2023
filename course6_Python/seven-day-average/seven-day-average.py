@@ -32,9 +32,10 @@ def main():
     comparative_averages(new_cases, states)
 
 
-# Create a dictionary to store 14 most recent days of new cases by state
 def calculate(reader):
-    # A dictionary where index is the state, and contents will be the date and the cases as another dictionary
+    '''
+    Create a dictionary to store 14 most recent days of new cases by state
+    '''
     states_dict = {}
 
     # Can only be done once
@@ -61,25 +62,25 @@ def calculate(reader):
     # Create a new dictionary to store the 14 most recent days of new cases by state
     states_dict_new = {}
 
+    # Get the dates and sort them in reverse order
+    dates_list = sorted(cases_by_date_dict.keys(), reverse=False)
+
     # Iterate over the dictionary and keep only the most recent values
     for state, cases_by_date_dict in states_dict.items():
-        # Get the dates and sort them in reverse order
-        dates_list = sorted(cases_by_date_dict.keys(), reverse=True)
-
         # Create a new dictionary for the state with the most recent 14 days
         cases_by_date_dict_new = {}
-        for date in dates_list[:15]:  # Include the most recent 14 days
+        for date in dates_list[(len(dates_list) - 15):]:  # Include the most recent 14 days
             cases_by_date_dict_new[date] = cases_by_date_dict[date]
         
         new_cases = cases_by_date_dict_new
         # Calculate the new cases for each day and update the dictionary
-        for i in range(1, len(dates_list)):
+        for i in range(len(dates_list) - 15, len(dates_list)):
             current_date = dates_list[i]
             previous_date = dates_list[i - 1]
             current_cases = int(cases_by_date_dict[current_date])
             previous_cases = int(cases_by_date_dict[previous_date])
             new_cases[current_date] = current_cases - previous_cases
-        new_cases[dates_list[0]] = 0 # set the first day as default 0
+        new_cases[dates_list[len(dates_list) - 15]] = 0 # set the first day as default 0
         
         # Update the dictionary for the state
         states_dict_new[state] = new_cases
@@ -94,7 +95,7 @@ def comparative_averages(new_cases, states):
         for date in new_cases[state]:  # Sorted in increasing order
             cases += int(new_cases[state][date])
         average = cases / 14
-        print(f"{average:.2f}")
+        print(f"The state of {state} has {average:.2f} new cases per week on average.")
 
 
 main()
