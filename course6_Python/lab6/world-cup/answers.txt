@@ -1,0 +1,19 @@
+Times:
+
+10 simulations:      0m0.097s
+100 simulations:     0m0.108s
+1000 simulations:    0m0.138s
+10000 simulations:   0m0.446s
+100000 simulations:  0m3.816s
+1000000 simulations: 0m29.827s
+
+Questions:
+
+Which predictions, if any, proved incorrect as you increased the number of simulations?:
+
+The first doesn´t even print all the countries because the loops are so few that some of them have 0% of becoming winners. From N = 100, Brazil and Belgium already come out on top, so the result is already good.
+
+Suppose you're charged a fee for each second of compute time your program uses.
+After how many simulations would you call the predictions "good enough"?:
+
+Since the program reaches the correct predictions at N = 10000 in 0.4s, I would set the N at 20000 in order to assure correct predictions and leave some space beneath the 1s mark. Of course, that doesn´t take into account any added delay that would make the real execution time go above 1s.
