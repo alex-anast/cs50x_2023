@@ -22,7 +22,7 @@ def greet(user_input):
     elif user_input[0].lower() == 'h':
         return "$20"
     else:
-        return "$1000"
+        return "$100"
 
 # executed only if it's not imported by someone else
 if __name__ == '__main__':

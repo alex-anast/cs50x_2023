@@ -35,3 +35,9 @@ try:
 except ZeroDivisionError:
     ...
 ```
+
+## Thought Question
+
+Why do you think some websites, such as The Washington Post post different values than your program generates for “Average daily new cases” and “Change in avg. daily cases in last 7 days” for some states, and the same values for others?
+
+Maybe it's a matter of datasets. For some states I have the same value for the whole week. Well, maybe The Washington Post has better sources.
