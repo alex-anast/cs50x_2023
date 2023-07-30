@@ -26,23 +26,23 @@ def main():
         if len(state) == 0:
             break
 
-    print(f"\nSeven-Day Averages")
+    print("\nSeven-Day Averages")
 
     # Print out 7-day averages for this week vs last week
     comparative_averages(new_cases, states)
 
 
 def calculate(reader):
-    '''
+    """
     Create a dictionary to store 14 most recent days of new cases by state
-    '''
+    """
     states_dict = {}
 
     # Can only be done once
     for row in reader:
         # Get the values of interest
         state = row["state"]
-        date  = row["date"]
+        date = row["date"]
         cases = row["cases"]
 
         # Check if the state is already present in the dictionary
@@ -58,7 +58,7 @@ def calculate(reader):
 
         # Update the dictionary for the state
         states_dict[state] = cases_by_date_dict
-        
+
     # Create a new dictionary to store the 14 most recent days of new cases by state
     states_dict_new = {}
 
@@ -69,9 +69,11 @@ def calculate(reader):
     for state, cases_by_date_dict in states_dict.items():
         # Create a new dictionary for the state with the most recent 14 days
         cases_by_date_dict_new = {}
-        for date in dates_list[(len(dates_list) - 15):]:  # Include the most recent 14 days
+        for date in dates_list[
+            (len(dates_list) - 15) :
+        ]:  # Include the most recent 14 days
             cases_by_date_dict_new[date] = cases_by_date_dict[date]
-        
+
         new_cases = cases_by_date_dict_new
         # Calculate the new cases for each day and update the dictionary
         for i in range(len(dates_list) - 15, len(dates_list)):
@@ -80,8 +82,10 @@ def calculate(reader):
             current_cases = int(cases_by_date_dict[current_date])
             previous_cases = int(cases_by_date_dict[previous_date])
             new_cases[current_date] = current_cases - previous_cases
-        new_cases[dates_list[len(dates_list) - 15]] = 0 # set the first day as default 0
-        
+        new_cases[
+            dates_list[len(dates_list) - 15]
+        ] = 0  # set the first day as default 0
+
         # Update the dictionary for the state
         states_dict_new[state] = new_cases
 
@@ -98,4 +102,5 @@ def comparative_averages(new_cases, states):
         print(f"The state of {state} has {average:.2f} new cases per week on average.")
 
 
-main()
+if __name__ == "__main__":
+    main()

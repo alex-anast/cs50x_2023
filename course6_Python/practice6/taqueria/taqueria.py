@@ -9,7 +9,7 @@ def main():
         "Super Burrito": 8.50,
         "Super Quesadilla": 9.50,
         "Taco": 3.00,
-        "Tortilla Salad": 8.00
+        "Tortilla Salad": 8.00,
     }
     # ask user for item until control + d is inserted
     try:
@@ -25,4 +25,6 @@ def main():
     except EOFError as cntrl_d:
         ...
 
-main()
+
+if __name__ == "__main__":
+    main()
