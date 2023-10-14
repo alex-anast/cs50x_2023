@@ -1,5 +1,6 @@
 import math
 
+
 def is_prime(n):
     """Return True if n is prime, else False."""
     if n < 2:
@@ -8,6 +9,7 @@ def is_prime(n):
         if n % i == 0:
             return False
     return True
+
 
 for i in range(1000, 1200):
     if is_prime(i):
